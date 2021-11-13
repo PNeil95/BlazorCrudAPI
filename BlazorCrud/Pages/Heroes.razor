@@ -1,0 +1,33 @@
+﻿@page "/heroes"
+@using System.Net.Http
+@inject HttpClient Http
+@using BlazorCrud.Data
+@using System.Net.Http.Json
+
+<h3>Heroes</h3>
+
+<table class="table">
+  @if (oRespuesta !=null && oRespuesta.Data !=null)
+  {
+      
+  
+      @foreach (var oElement in oRespuesta.Data)
+      {
+        <tr>
+            <td>@oElement.Id</td>
+            <td>@oElement.Nombre</td>
+            <td>@oElement.Poder</td>
+            <td>@oElement.Universo</td>
+        </tr>    
+      }
+  }
+</table>
+
+@code {
+    public string Url = "/api/Heroe";
+    public Data.Respuesta oRespuesta = new Data.Respuesta();
+
+    protected override async Task OnInitializedAsync() =>
+        oRespuesta = await Http.GetFromJsonAsync<Respuesta>(Url);
+
+}
