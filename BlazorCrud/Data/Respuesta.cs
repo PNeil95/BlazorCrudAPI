@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace BlazorCrud.Data
 {
-    public class Respuesta
+    public class Respuesta<T>
     {
         public int Exito { get; set; }
         public string Mensaje { get; set; }
-        public List<Heroe> Data { get; set; }
+        public T Data { get; set; }
     }
 }

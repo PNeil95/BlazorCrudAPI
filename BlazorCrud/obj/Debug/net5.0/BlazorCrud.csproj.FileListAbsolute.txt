@@ -57,3 +57,8 @@ C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\ref\BlazorCru
 C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\BlazorCrud.pdb
 C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\BlazorCrud.genruntimeconfig.cache
 C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\BlazorCrud.csproj.CopyComplete
+C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\BlazorCrud.csprojAssemblyReference.cache
+C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\RazorDeclaration\Pages\HeroeForm.razor.g.cs
+C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\Razor\Pages\HeroeForm.razor.g.cs
+C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\RazorDeclaration\Pages\EliminarHeroe.razor.g.cs
+C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\obj\Debug\net5.0\Razor\Pages\EliminarHeroe.razor.g.cs

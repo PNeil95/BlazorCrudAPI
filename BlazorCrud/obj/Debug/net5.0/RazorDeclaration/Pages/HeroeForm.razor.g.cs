@@ -76,28 +76,29 @@ using BlazorCrud.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\Pages\Heroes.razor"
+#line 3 "C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\Pages\HeroeForm.razor"
+using Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\Pages\HeroeForm.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\Pages\Heroes.razor"
-using BlazorCrud.Data;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 5 "C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\Pages\Heroes.razor"
+#line 6 "C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\Pages\HeroeForm.razor"
 using System.Net.Http.Json;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/heroes")]
-    public partial class Heroes : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/heroesform")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/heroesform/{Id:int}")]
+    public partial class HeroeForm : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -105,18 +106,45 @@ using System.Net.Http.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 43 "C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\Pages\Heroes.razor"
+#line 48 "C:\Users\paolo\source\repos\BlazorCrud\BlazorCrud\Pages\HeroeForm.razor"
        
+    [Parameter]
+    public int Id { get; set; }
+
+    Heroe oHeroe = new Heroe();
+    Respuesta<object> oRespuesta = new Respuesta<object>();
+    Respuesta<Heroe> oRespuestaHeroe = new Respuesta<Heroe>();
     public string Url = "/api/Heroe";
-    public Data.Respuesta<List<Heroe>> oRespuesta = new Data.Respuesta<List<Heroe>>();
 
-    protected override async Task OnInitializedAsync() =>
-        oRespuesta = await Http.GetFromJsonAsync<Respuesta<List<Heroe>>>(Url);
+    private async Task Save()
+    {
+        if (Id != 0)
+        {
+            var response = await Http.PostAsJsonAsync<Heroe>(Url, oHeroe);
+            oRespuesta = response.Content.ReadFromJsonAsync<Respuesta<object>>().Result;
+        }
+        else
+        {
+            var response = await Http.PostAsJsonAsync<Heroe>(Url, oHeroe);
+            oRespuesta = response.Content.ReadFromJsonAsync<Respuesta<object>>().Result;
+        }
 
+        NavigationManager.NavigateTo("/heroes");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(Id != 0)
+        {
+            oRespuestaHeroe = await Http.GetFromJsonAsync<Respuesta<Heroe>>(Url+ "/" + Id);
+            oHeroe = oRespuestaHeroe.Data;
+        }
+    }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private HttpClient Http { get; set; }
     }
 }

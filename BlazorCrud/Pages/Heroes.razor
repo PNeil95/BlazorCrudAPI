@@ -5,29 +5,46 @@
 @using System.Net.Http.Json
 
 <h3>Heroes</h3>
+<div class="col-12" text-right>
+    <a href="heroesform">Nuevo</a>
+</div>
 
 <table class="table">
-  @if (oRespuesta !=null && oRespuesta.Data !=null)
-  {
-      
-  
-      @foreach (var oElement in oRespuesta.Data)
-      {
-        <tr>
-            <td>@oElement.Id</td>
-            <td>@oElement.Nombre</td>
-            <td>@oElement.Poder</td>
-            <td>@oElement.Universo</td>
-        </tr>    
-      }
-  }
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Poder</th>
+        <th>Universo</th>
+        <th></th>
+    </tr>
+
+    @if (oRespuesta != null && oRespuesta.Data != null)
+    {
+
+
+        @foreach (var oElement in oRespuesta.Data)
+        {
+            <tr>
+                <td>@oElement.Id</td>
+                <td>@oElement.Nombre</td>
+                <td>@oElement.Poder</td>
+                <td>@oElement.Universo</td>
+                <td>
+                    <a href="/heroesform/@oElement.Id">Editar</a>
+                    <a href="/eliminarheroes/@oElement.Id">Eliminar</a>
+
+                </td>
+            </tr>
+
+        }
+    }
 </table>
 
 @code {
     public string Url = "/api/Heroe";
-    public Data.Respuesta oRespuesta = new Data.Respuesta();
+    public Data.Respuesta<List<Heroe>> oRespuesta = new Data.Respuesta<List<Heroe>>();
 
     protected override async Task OnInitializedAsync() =>
-        oRespuesta = await Http.GetFromJsonAsync<Respuesta>(Url);
+        oRespuesta = await Http.GetFromJsonAsync<Respuesta<List<Heroe>>>(Url);
 
 }

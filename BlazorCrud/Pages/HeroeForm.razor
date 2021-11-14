@@ -1,0 +1,81 @@
+﻿@page "/heroesform"
+@page "/heroesform/{Id:int}"
+@using Data;
+@using System.Net.Http
+@inject HttpClient Http
+@using System.Net.Http.Json
+@inject NavigationManager NavigationManager
+
+<h3>HeroeForm</h3>
+
+<EditForm Model="@oHeroe">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-group row mb-1">
+                <label class=" = " col-sm-3">Nombre</label>
+                <div class="col-sm-9">
+                    <InputText class="form-control" @bind-Value="@oHeroe.Nombre"></InputText>
+                </div>
+            </div>
+
+            <div class="form-group row mb-1">
+                <label class=" = " col-sm-3">Poder</label>
+                <div class="col-sm-9">
+                    <InputText class="form-control" @bind-Value="@oHeroe.Poder"></InputText>
+                </div>
+            </div>
+           
+            <div class="form-group row mb-1">
+                <label class=" = " col-sm-3">Universo</label>
+                <div class="col-sm-9">
+                    <InputText class="form-control" @bind-Value="@oHeroe.Universo"></InputText>
+                </div>
+            </div>
+
+            <div class="form-group row mb-1">
+                <div class="col-sm-12">
+                    <button class="btn btn-primary" @onclick="Save">Guardar</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Heroe oHeroe = new Heroe();
+    Respuesta<object> oRespuesta = new Respuesta<object>();
+    Respuesta<Heroe> oRespuestaHeroe = new Respuesta<Heroe>();
+    public string Url = "/api/Heroe";
+
+    private async Task Save()
+    {
+        if (Id != 0)
+        {
+            var response = await Http.PostAsJsonAsync<Heroe>(Url, oHeroe);
+            oRespuesta = response.Content.ReadFromJsonAsync<Respuesta<object>>().Result;
+        }
+        else
+        {
+            var response = await Http.PostAsJsonAsync<Heroe>(Url, oHeroe);
+            oRespuesta = response.Content.ReadFromJsonAsync<Respuesta<object>>().Result;
+        }
+
+        NavigationManager.NavigateTo("/heroes");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(Id != 0)
+        {
+            oRespuestaHeroe = await Http.GetFromJsonAsync<Respuesta<Heroe>>(Url+ "/" + Id);
+            oHeroe = oRespuestaHeroe.Data;
+        }
+    }
+}
